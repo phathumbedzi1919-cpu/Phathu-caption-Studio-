@@ -95,6 +95,114 @@ function fitQuote() {
 
       }
 /* ===========================
+   PART 2
+   TEXT CONTROLS
+=========================== */
+
+const fontSelect = document.getElementById("fontSelect");
+const fontSize = document.getElementById("fontSize");
+const textColor = document.getElementById("textColor");
+const overlayOpacity = document.getElementById("overlayOpacity");
+const filterSelect = document.getElementById("filterSelect");
+const overlay = document.getElementById("overlay");
+
+// ===========================
+// FONT
+// ===========================
+
+fontSelect.addEventListener("change", function(){
+
+    quote.style.fontFamily = this.value;
+
+});
+
+// ===========================
+// FONT SIZE
+// ===========================
+
+fontSize.addEventListener("input", function(){
+
+    quote.style.fontSize = this.value + "px";
+
+});
+
+// ===========================
+// TEXT COLOR
+// ===========================
+
+textColor.addEventListener("input", function(){
+
+    quote.style.color = this.value;
+
+});
+
+// ===========================
+// OVERLAY DARKNESS
+// ===========================
+
+overlayOpacity.addEventListener("input", function(){
+
+    const value = this.value / 100;
+
+    overlay.style.background =
+    `rgba(0,0,0,${value})`;
+
+});
+
+// ===========================
+// FILTERS
+// ===========================
+
+filterSelect.addEventListener("change", function(){
+
+    switch(this.value){
+
+        case "none":
+
+            overlay.style.background =
+            "rgba(0,0,0,0)";
+
+        break;
+
+        case "dark":
+
+            overlay.style.background =
+            "rgba(0,0,0,0.35)";
+
+        break;
+
+        case "gold":
+
+            overlay.style.background =
+            "rgba(180,120,0,0.30)";
+
+        break;
+
+        case "blue":
+
+            overlay.style.background =
+            "rgba(0,70,180,0.30)";
+
+        break;
+
+        case "green":
+
+            overlay.style.background =
+            "rgba(0,120,70,0.30)";
+
+        break;
+
+        case "purple":
+
+            overlay.style.background =
+            "rgba(120,0,180,0.30)";
+
+        break;
+
+    }
+
+});
+/* ===========================
    SAVE IMAGE
 =========================== */
 
