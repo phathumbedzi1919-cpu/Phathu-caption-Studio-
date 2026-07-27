@@ -4,314 +4,87 @@
 <head>
 
 <meta charset="UTF-8">
-
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Phathu Quote Studio</title>
+<title>Phathu Quote Studio 2.0</title>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-<style>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Bebas+Neue&family=Cinzel:wght@400;700&family=Lora:wght@400;700&family=Montserrat:wght@400;700&family=Oswald:wght@400;700&family=Playfair+Display:wght@400;700&family=Poppins:wght@300;400;600;700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-}
-
-body{
-background:#111;
-font-family:Arial,sans-serif;
-color:white;
-text-align:center;
-padding:20px;
-}
-
-h1{
-margin-bottom:20px;
-font-size:35px;
-}
-
-input,
-textarea,
-select,
-button{
-
-widt:90%;
-max-width:500px;
-padding:12px;
-margin:10px auto;
-display:block;
-border:none;
-border-radius:12px;
-font-size:16px;
-
-}
-
-textarea{
-height:120px;
-resize:none;
-}
-
-button{
-background:white;
-color:black;
-font-weight:bold;
-cursor:pointer;
-transition:.3s;
-}
-
-button:hover{
-background:#ddd;
-}
-
-label{
-display:block;
-margin-top:15px;
-font-size:18px;
-}
-/* ========================= */
-/* CANVAS */
-/* ========================= */
-
-#canvasArea{
-
-width:350px;
-height:450px;
-margin:25px auto;
-position:relative;
-overflow:hidden;
-border-radius:20px;
-background:#222;
-box-shadow:0 0 25px rgba(255,255,255,.15);
-transition:0.4s;
-
-}
-
-/* Full Screen Mode */
-
-#canvasArea.fullscreen{
-
-width:400vw;
-height:400vh;
-margin:0;
-border-radius:0;
-box-shadow:none;
-
-}
-
-#photo{
-
-width:100%;
-height:100%;
-object-fit:cover;
-
-}
-
-#filter{
-
-position:absolute;
-top:0;
-left:0;
-width:100%;
-height:100%;
-
-}
-
-#quote{
-
-position:absolute;
-left:25px;
-right:25px;
-bottom:95px;
-font-size:30px;
-font-weight:bold;
-color:white;
-line-height:1.3;
-
-text-shadow:
-2px 2px 10px black,
-0px 0px 15px black;
-
-}
-
-#signature{
-
-position:absolute;
-bottom:35px;
-right:20px;
-
-font-size:18px;
-font-style:italic;
-color:white;
-
-text-shadow:
-2px 2px 8px black;
-
-}
-
-/* FILTERS */
-
-.none{
-background:transparent;
-}
-
-.dark{
-background:rgba(0,0,0,.55);
-}
-
-.gold{
-background:rgba(90,60,0,.45);
-}
-
-.blue{
-background:rgba(0,40,120,.45);
-}
-
-.clean{
-background:rgba(255,255,255,.20);
-}
-
-</style>
+<link rel="stylesheet" href="style.css">
 
 </head>
+
 <body>
 
-<h1>Phathu Quote Studio</h1>
+<h1>Phathu Quote Studio 2.0</h1>
+
+<!-- Upload Image -->
 
 <input
 type="file"
-id="upload"
+id="imageInput"
 accept="image/*">
 
-<textarea id="quoteInput">The greatest investment you can make is yourself.</textarea>
+<!-- Quote -->
 
-<select id="style">
+<textarea
+id="quoteInput"
+placeholder="Write your quote here..."></textarea>
 
-<option value="none">No Filter</option>
-
-<option value="dark">Investor Black</option>
-
-<option value="gold">Luxury Gold</option>
-
-<option value="blue">Trading Blue</option>
-
-<option value="clean">Education Clean</option>
-
-</select>
-
-<label>Caption Size</label>
-
-<input
-type="range"
-id="size"
-min="15"
-max="60"
-value="30">
+<!-- Signature -->
 
 <input
 type="text"
 id="signatureInput"
+placeholder="Signature"
 value="Phathu Mbedzi">
 
-<button onclick="createDesign()">
-Create Design
-</button>
+<!-- Canvas -->
 
-<button onclick="toggleFullScreen()">
-Full Screen
-</button>
-
-<button onclick="saveImage()">
-Save Image
-</button>
-
-<div id="canvasArea">
+<div id="editor">
 
 <img id="photo">
 
-<div id="filter" class="none"></div>
+<div id="overlay"></div>
 
-<div id="quote">
-The greatest investment you can make is yourself.
+<div id="quoteBox">
+
+<span id="quote"></span>
+
 </div>
 
 <div id="signature">
-— Phathu Mbedzi
-</div>
+
+Phathu Mbedzi
 
 </div>
 
-<script>
-  function createDesign(){
+</div>
 
-const file=document.getElementById("upload").files[0];
+<!-- Controls -->
 
-if(file){
+<div id="controls">
 
-const reader=new FileReader();
+<button id="createBtn">
+Create Design
+</button>
 
-reader.onload=function(e){
+<button id="saveBtn">
+Save Image
+</button>
 
-document.getElementById("photo").src=e.target.result;
+<button id="videoBtn">
+Create Video
+</button>
 
-}
+</div>
 
-reader.readAsDataURL(file);
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
-}
-
-document.getElementById("quote").innerHTML=
-document.getElementById("quoteInput").value;
-
-document.getElementById("quote").style.fontSize=
-document.getElementById("size").value+"px";
-
-document.getElementById("signature").innerHTML=
-"— "+document.getElementById("signatureInput").value;
-
-document.getElementById("filter").className=
-document.getElementById("style").value;
-
-}
-
-document.getElementById("size").oninput=function(){
-
-document.getElementById("quote").style.fontSize=
-this.value+"px";
-
-}
-
-function toggleFullScreen(){
-
-const canvas=document.getElementById("canvasArea");
-
-canvas.classList.toggle("fullscreen");
-
-}
-
-function saveImage(){
-
-const area=document.getElementById("canvasArea");
-
-html2canvas(area,{
-scale:2,
-useCORS:true
-}).then(function(canvas){
-
-const link=document.createElement("a");
-
-link.download="Phathu_Quote_Studio.png";
-
-link.href=canvas.toDataURL("image/png");
-
-link.click();
-
-});
-
-}
-
-</script>
+<script src="script.js"></script>
 
 </body>
 
