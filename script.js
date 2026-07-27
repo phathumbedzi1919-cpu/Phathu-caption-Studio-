@@ -231,3 +231,31 @@ function saveImage() {
     });
 
        }
+/* ===========================
+   WORD COLORS
+=========================== */
+
+const wordColor = document.getElementById("wordColor");
+const applyWordColor = document.getElementById("applyWordColor");
+
+applyWordColor.addEventListener("click", function () {
+
+    const selection = window.getSelection();
+
+    if (!selection.rangeCount) return;
+
+    const range = selection.getRangeAt(0);
+
+    if (selection.toString().trim() === "") return;
+
+    const span = document.createElement("span");
+
+    span.style.color = wordColor.value;
+
+    span.textContent = selection.toString();
+
+    range.deleteContents();
+
+    range.insertNode(span);
+
+});
