@@ -13,7 +13,7 @@ const quote = document.getElementById("quote");
 const signature = document.getElementById("signature");
 
 const createBtn = document.getElementById("createBtn");
-
+quote.contentEditable = true;
 // ===========================
 // Upload Image
 // ===========================
