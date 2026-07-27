@@ -257,3 +257,36 @@ font-size:20px;
 }
 
   }
+/* ===========================
+SELECTS
+=========================== */
+
+select{
+
+width:95%;
+max-width:450px;
+
+padding:14px;
+
+margin:10px 0;
+
+border:none;
+
+border-radius:14px;
+
+font-size:16px;
+
+}
+
+label{
+
+width:95%;
+max-width:450px;
+
+text-align:left;
+
+font-weight:600;
+
+margin-top:10px;
+
+}
