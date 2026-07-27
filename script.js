@@ -94,3 +94,32 @@ function fitQuote() {
     }
 
       }
+/* ===========================
+   SAVE IMAGE
+=========================== */
+
+const saveBtn = document.getElementById("saveBtn");
+
+saveBtn.addEventListener("click", saveImage);
+
+function saveImage() {
+
+    html2canvas(document.getElementById("editor"), {
+
+        scale: 3,
+        useCORS: true,
+        backgroundColor: null
+
+    }).then(function (canvas) {
+
+        const link = document.createElement("a");
+
+        link.download = "Phathu_Quote_Studio.png";
+
+        link.href = canvas.toDataURL("image/png");
+
+        link.click();
+
+    });
+
+       }
